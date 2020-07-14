@@ -75,7 +75,7 @@ class _Stepper2State extends State<StepperTouch>
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.direction == Axis.horizontal) {
-      _animation = Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(1.5, 0.0))
+      _animation = Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(0.5, 0.0))
           .animate(_controller);
     } else {
       _animation = Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(0.0, 1.5))
