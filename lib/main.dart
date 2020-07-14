@@ -21,8 +21,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    getCurrentAppTheme();//TODO: Move to splash screen initState
     super.initState();
-    getCurrentAppTheme();
   }
 
   @override

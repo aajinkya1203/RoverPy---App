@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:roverpyapp/commons/collapsing_navigation_drawer.dart';
-import 'package:roverpyapp/commons/control_button.dart';
-import 'package:roverpyapp/models/control_model.dart';
+import 'package:roverpyapp/commons/stepper_control.dart';
+
 
 class ControlsPage extends StatefulWidget {
   @override
@@ -11,9 +11,6 @@ class ControlsPage extends StatefulWidget {
 
 class _ControlsPageState extends State<ControlsPage> {
 
-  int roverCurrActive = -1;
-  int beltCurrActive = -1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,83 +18,75 @@ class _ControlsPageState extends State<ControlsPage> {
       appBar: AppBar(
         title: Text('RoverPy Controls', style: Theme.of(context).textTheme.headline,),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(color: Theme.of(context).accentColor, blurRadius: 5.0),
-                ],
-              ),
-              child: Card(
-                color: Theme.of(context).backgroundColor,
-                elevation: 5.0,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 16.0),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width - 15.0,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(blurRadius: 5.0, color: Theme.of(context).accentColor),
+                  ]
+                ),
+                child: Card(
+                  color: Theme.of(context).backgroundColor,
+                  elevation: 5.0,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('Rover Controls', style: Theme.of(context).textTheme.title),
+                            child: Text('Rover Controls', style: Theme.of(context).textTheme.title,),
                           ),
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          ControlButton(icon: roverControls[0].icon, isActive: 0==roverCurrActive, onTap: () {
-                            setState(() {
-                              roverCurrActive = 0;
-                            });
-                            print('Move Forward');
-                          },),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          ControlButton(icon: roverControls[1].icon, isActive: 1==roverCurrActive, onTap: () {
-                            setState(() {
-                              roverCurrActive = 1;
-                            });
-                            print('Turn Left');
-                          },
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: Center(
+                                child: StepperTouch(
+                                  size: 220.0,
+                                  direction: Axis.vertical,
+                                  initialValue: 'S',
+                                  positiveValue: 'F',
+                                  negativeValue: 'B',
+                                  onEnd: (String value) {
+                                    print(value);//TODO: Replace with Bluetooth function
+                                  },
+                                  onHoldDown: (String value) {
+                                    print(value);//TODO: Replace with Bluetooth function
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
-                          CircleAvatar(
-                            radius: 25.0, backgroundColor: -1==roverCurrActive?Theme.of(context).splashColor:Theme.of(context).primaryColor,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    roverCurrActive = -1;
-                                  });
-                                  print('Stop');
-                                },
-                                child: Icon(Icons.stop, size: 30.0, color: Colors.black,),
-                              )
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: Center(
+                                child: StepperTouch(
+                                  size: 220.0,
+                                  direction: Axis.horizontal,
+                                  initialValue: 'S',
+                                  positiveValue: 'L',
+                                  negativeValue: 'R',
+                                  onEnd: (String value) {
+                                    print(value);//TODO: Replace with Bluetooth function
+                                  },
+                                  onHoldDown: (String value) {
+                                    print(value);//TODO: Replace with Bluetooth function
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
-                          ControlButton(icon: roverControls[2].icon, isActive: 2==roverCurrActive, onTap: () {
-                            setState(() {
-                              roverCurrActive = 2;
-                            });
-                            print('Turn Right');
-                          },)
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          ControlButton(icon: roverControls[3].icon, isActive: 3==roverCurrActive, onTap: () {
-                            setState(() {
-                              roverCurrActive = 3;
-                            });
-                            print('Move Backwards');
-                          },)
                         ],
                       ),
                     ],
@@ -105,60 +94,47 @@ class _ControlsPageState extends State<ControlsPage> {
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
+            Container(
+              width: MediaQuery.of(context).size.width - 15.0,
               decoration: BoxDecoration(
                 boxShadow: [
-                  BoxShadow(color: Theme.of(context).accentColor, blurRadius: 5.0)
+                  BoxShadow( blurRadius: 5.0, color: Theme.of(context).accentColor),
                 ]
               ),
               child: Card(
-                color: Theme.of(context).backgroundColor,
                 elevation: 5.0,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 16.0),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Belt Controls', style: Theme.of(context).textTheme.title),
-                          )
-                        ],
+                color: Theme.of(context).backgroundColor,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Belt Controls', style: Theme.of(context).textTheme.title,),
+                    ),
+                    SizedBox(width: 30.0,),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: StepperTouch(
+                        size: 220.0,
+                        direction: Axis.vertical,
+                        initialValue: 'S',
+                        positiveValue: 'U',
+                        negativeValue: 'D',
+                        onEnd: (String value) {
+                          print(value);//TODO: Replace with Bluetooth function
+                        },
+                        onHoldDown: (String value) {
+                          print(value);//TODO: Replace with Bluetooth function
+                        },
                       ),
-                      ControlButton(icon: beltControls[0].icon, isActive: 0==beltCurrActive, onTap: () {
-                        setState(() {
-                          beltCurrActive = 0;
-                        });
-                        print('Belt Up');
-                      },),
-                      CircleAvatar(
-                          radius: 25.0, backgroundColor: -1==beltCurrActive?Theme.of(context).splashColor:Theme.of(context).primaryColor,
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                beltCurrActive = -1;
-                              });
-                            },
-                            child: Icon(Icons.stop, size: 30.0, color: Colors.black,),
-                          )
-                      ),
-                      ControlButton(icon: beltControls[1].icon, isActive: 1==beltCurrActive, onTap: () {
-                        setState(() {
-                          beltCurrActive = 1;
-                        });
-                        print('Belt Down');
-                      },)
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       drawer: CollapsingNavDrawer(),
     );
