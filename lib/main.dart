@@ -12,7 +12,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   DarkThemeProvider _darkThemeProvider = DarkThemeProvider();
 
   void getCurrentAppTheme() async {
@@ -21,7 +20,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    getCurrentAppTheme();//TODO: Move to splash screen initState
+    getCurrentAppTheme(); //TODO: Move to splash screen initState
     super.initState();
   }
 

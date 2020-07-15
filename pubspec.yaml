@@ -25,6 +25,10 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.5.8
   provider: ^4.0.0
+  flare_flutter: ^1.8.3
+  firebase_core: ^0.4.0+9
+  flutter_screenutil: ^2.2.0
+  firebase_auth: ^0.14.0+5
 
 dev_dependencies:
   flutter_test:
@@ -73,3 +77,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+fonts:
+  - family: Lexend_Deca
+    fonts:
+      - asset: fonts/LexendDeca-Regular.ttf
+  - family: Poppins
+    fonts:
+        - asset: fonts/Poppins-Medium.ttf
+  - family: Raleway
+    fonts:
+        - asset: fonts/Raleway-SemiBold.ttf

@@ -24,6 +24,7 @@ class StepperTouch extends StatefulWidget {
 
   /// called whenever the stepper is released
   final ValueChanged<String> onEnd;
+
   /// called whenever the stepper is moved
   final ValueChanged<String> onHoldDown;
 
@@ -87,8 +88,12 @@ class _Stepper2State extends State<StepperTouch>
   Widget build(BuildContext context) {
     return FittedBox(
       child: Container(
-        width: widget.direction == Axis.horizontal ? widget.size : widget.size/2 - 30.0,
-        height: widget.direction == Axis.horizontal ? widget.size/2 - 30.0 : widget.size,
+        width: widget.direction == Axis.horizontal
+            ? widget.size
+            : widget.size / 2 - 30.0,
+        height: widget.direction == Axis.horizontal
+            ? widget.size / 2 - 30.0
+            : widget.size,
         child: Material(
           type: MaterialType.canvas,
           clipBehavior: Clip.antiAlias,
@@ -100,13 +105,22 @@ class _Stepper2State extends State<StepperTouch>
               Positioned(
                 left: widget.direction == Axis.horizontal ? 10.0 : null,
                 bottom: widget.direction == Axis.horizontal ? null : 10.0,
-                child:
-                Icon(widget.direction==Axis.horizontal?Icons.arrow_left:Icons.arrow_drop_down, size: 40.0, color: widget.buttonsColor),
+                child: Icon(
+                    widget.direction == Axis.horizontal
+                        ? Icons.arrow_left
+                        : Icons.arrow_drop_down,
+                    size: 40.0,
+                    color: widget.buttonsColor),
               ),
               Positioned(
                 right: widget.direction == Axis.horizontal ? 10.0 : null,
                 top: widget.direction == Axis.horizontal ? null : 10.0,
-                child: Icon(widget.direction==Axis.horizontal?Icons.arrow_right:Icons.arrow_drop_up, size: 40.0, color: widget.buttonsColor),
+                child: Icon(
+                    widget.direction == Axis.horizontal
+                        ? Icons.arrow_right
+                        : Icons.arrow_drop_up,
+                    size: 40.0,
+                    color: widget.buttonsColor),
               ),
               GestureDetector(
                 onHorizontalDragStart: _onPanStart,
@@ -118,7 +132,7 @@ class _Stepper2State extends State<StepperTouch>
                     shape: const CircleBorder(),
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: 500),
-                      height: widget.size/3,
+                      height: widget.size / 3,
                       decoration: BoxDecoration(
                         color: _color,
                         shape: BoxShape.circle,
@@ -156,16 +170,16 @@ class _Stepper2State extends State<StepperTouch>
   void _onPanUpdate(DragUpdateDetails details) {
     _controller.value = offsetFromGlobalPos(details.globalPosition);
     setState(() {
-      int r = 0 + ((_controller.value*2).abs()*255).round();
-      int g = 255 - ((_controller.value*2).abs()*255).round();
-      _color = Color.fromRGBO(r, g, 255, 1);
+      //int r = 0 + ((_controller.value * 2).abs() * 255).round();
+      int g = 255 - ((_controller.value * 2).abs() * 255).round();
+      _color = Color.fromRGBO(0, g, 255, 1);
     });
     if (_controller.value <= -0.10) {
-      setState(() =>  _value = widget.positiveValue);
+      setState(() => _value = widget.positiveValue);
     } else if (_controller.value >= 0.10) {
       setState(() => _value = widget.negativeValue);
     }
-    if( widget.onHoldDown != null){
+    if (widget.onHoldDown != null) {
       widget.onHoldDown(_value);
     }
   }
@@ -174,7 +188,7 @@ class _Stepper2State extends State<StepperTouch>
     _controller.stop();
     if (widget.withSpring) {
       final SpringDescription _kDefaultSpring =
-      new SpringDescription.withDampingRatio(
+          new SpringDescription.withDampingRatio(
         mass: 0.9,
         stiffness: 250.0,
         ratio: 0.6,
